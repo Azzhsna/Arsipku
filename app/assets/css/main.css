@@ -1,0 +1,87 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme {
+  --font-sans: "Montserrat", system-ui, sans-serif;
+  /* --font-mono: 'JetBrains Mono', monospace; */
+}
+
+@theme static {
+  /* Typography */
+  --color-neutral: #141414;
+  --color-neutral-10: #e5e5e8;
+  --color-neutral-20: #e5e5e8;
+  --color-neutral-30: #c2c2c6;
+  --color-neutral-40: #a0a0a2;
+  --color-neutral-50: #7d7d80;
+  --color-neutral-60: #5c5c5e;
+  --color-neutral-70: #404041;
+  --color-neutral-80: #292929;
+  --color-neutral-90: #1a1a1a;
+  --color-neutral-100: #141414;
+
+  /* Primary */
+  --color-primary: #457fb6;
+  --color-primary-10: #e8eff6;
+  --color-primary-20: #d1dfed;
+  --color-primary-30: #a2bfdb;
+  --color-primary-40: #749fc8;
+  --color-primary-50: #457fb6;
+  --color-primary-60: #175fa4;
+  --color-primary-70: #124c83;
+  --color-primary-80: #0e3962;
+  --color-primary-90: #092642;
+  --color-primary-100: #051321;
+
+  /* Secondary */
+  --color-secondary: #f9316d;
+  --color-secondary-10: #fed9d5;
+  --color-secondary-20: #feacad;
+  --color-secondary-30: #fd838f;
+  --color-secondary-40: #fb6382;
+  --color-secondary-50: #f9316d;
+  --color-secondary-60: #d6236a;
+  --color-secondary-70: #b31865;
+  --color-secondary-80: #900f5c;
+  --color-secondary-90: #770955;
+  --color-secondary-100: #5f0743;
+
+  /* Error */
+  --color-error: #f42d2d;
+  --color-error-10: #fed9d5;
+  --color-error-20: #feacad;
+  --color-error-30: #fb9580;
+  --color-error-40: #f86d60;
+  --color-error-50: #f42d2d;
+  --color-error-60: #d12030;
+  --color-error-70: #af1631;
+  --color-error-80: #8d0e2f;
+  --color-error-90: #75082e;
+  --color-error-100: #5f0726;
+
+  /* Success */
+  --color-success: #1cb854;
+  --color-success-10: #d2fbd0;
+  --color-success-20: #a3f7a9;
+  --color-success-30: #72e985;
+  --color-success-40: #4dd470;
+  --color-success-50: #1cb854;
+  --color-success-60: #149e53;
+  --color-success-70: #0e8450;
+  --color-success-80: #086a49;
+  --color-success-90: #055843;
+  --color-success-100: #044837;
+
+  /* Warning */
+  --color-warning: #ffa02e;
+  --color-warning-10: #fff3d5;
+  --color-warning-20: #ffe4ab;
+  --color-warning-30: #ffd181;
+  --color-warning-40: #ffbe62;
+  --color-warning-50: #ffa02e;
+  --color-warning-60: #db7e21;
+  --color-warning-70: #b75f17;
+  --color-warning-80: #93450e;
+  --color-warning-90: #7a3108;
+  --color-warning-100: #602706;
+}
