@@ -33,16 +33,29 @@
         :class="textClass"
         class="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-[220px] text-[170px] font-bold text-[#457FB6] opacity-0 transition-all duration-1000"
       >
-        Arsipku
+        {{ $t('Arsipku') }}
       </h1>
 
       <!-- Tulisan pojok kanan -->
-      <h2
-        :class="airnavClass"
-        class="absolute top-5 right-5 text-xl font-bold opacity-0 text-[#457FB6] transition-opacity duration-1000"
-      >
-        Airnav Indonesia
-      </h2>
+<div
+  :class="airnavClass"
+  class="absolute top-5 right-5 flex flex-col items-end opacity-0 transition-opacity duration-1000"
+>
+  <h2 class="text-xl font-bold text-[#457FB6]">
+    Airnav Indonesia
+  </h2>
+
+  <div class="flex gap-2 mt-2">
+    <button
+      v-for="locale in locales"
+      :key="locale.code"
+      @click="setLocale(locale.code)"
+      class="px-3 py-1 text-sm font-semibold bg-white/70 hover:bg-white text-[#457FB6] rounded-md"
+    >
+      {{ locale.name }}
+    </button>
+  </div>
+</div>
 
       <!-- Pesawat muncul -->
       <img
@@ -58,12 +71,12 @@
         class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center opacity-0 transition-opacity duration-1000 animate-fadeIn"
       >
         <p class="text-xl font-semibold text-[#457FB6] mb-10">
-          Your Central Hub for Managing Internal Documents at AirNav Indonesia
+          {{$t('Pusat Pengelolaan Dokumen Internal Anda di AirNav Indonesia')}}
         </p>
         <Ubutton
           class="px-8 py-4 bg-[#457FB6] text-white font-bold rounded-lg hover:bg-[#35629B] transition-colors"
         >
-          Login
+          {{$t('Masuk')}}
         </Ubutton>
       </div>
     </div>
@@ -72,6 +85,8 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+
+const { locales, setLocale } = useI18n() //bahasa
 
 const logoClass = ref("opacity-0");
 const logoStyle = ref({

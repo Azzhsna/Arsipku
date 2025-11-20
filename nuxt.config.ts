@@ -2,7 +2,18 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxt/ui'],
+  modules: ['@nuxt/ui', '@nuxtjs/i18n'],
+
+  i18n: {
+    defaultLocale: 'id',
+    langDir: 'locales/',
+    lazy: true,
+
+    locales: [
+      { code: 'id', name: 'ID', file: 'id.json' },
+      { code: 'en', name: 'EN', file: 'en.json' }
+    ]
+  },
 
   css: ['~/assets/css/main.css'],
 
