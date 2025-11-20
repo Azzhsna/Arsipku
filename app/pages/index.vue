@@ -23,7 +23,7 @@
 
       <!-- Angka 13 tetap -->
       <p
-        class="absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[300px] font-bold text-white opacity-100"
+        class="absolute top-150 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[350px] font-bold text-[#e3f1ff] opacity-100"
       >
         13
       </p>
@@ -31,7 +31,8 @@
       <!-- Tulisan ArsipKu -->
       <h1
         :class="textClass"
-        class="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-[220px] text-[170px] font-bold text-[#457FB6] opacity-0 transition-all duration-1000"
+        class="absolute top-70 left-1/2 transform -translate-x-1/2 -translate-y-[220px] text-[170px] font-bold opacity-0 transition-all duration-1000 bg-clip-text text-transparent"
+        style="background-image: linear-gradient(to right, #457fb6, #f5faff)"
       >
         {{ $t('Arsipku') }}
       </h1>
@@ -68,7 +69,7 @@
       <!-- Tulisan dan tombol muncul setelah pesawat -->
       <div
         v-if="showText"
-        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center opacity-0 transition-opacity duration-1000 animate-fadeIn"
+        class="absolute top-93 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center opacity-0 transition-opacity duration-1000 animate-fadeIn"
       >
         <p class="text-xl font-semibold text-[#457FB6] mb-10">
           {{$t('Pusat Pengelolaan Dokumen Internal Anda di AirNav Indonesia')}}
@@ -93,7 +94,7 @@ const logoStyle = ref({
   top: "10%",
   left: "50%",
   transform: "translate(-50%, 0)",
-  width: "600px",
+  width: "700px",
   height: "auto",
 });
 
@@ -103,13 +104,14 @@ const airnavClass = ref("");
 const showPlane = ref(false);
 const planeFast = ref(false);
 const showText = ref(false);
+const showOnboarding = ref(false);
 
 onMounted(() => {
   setTimeout(() => {
     logoClass.value = "opacity-100";
-  }, 1000);
+  }, 500);
 
-  // 4 detik: logo pindah kiri & kecil, ArsipKu muncul, Airnav Indonesia muncul
+  // 3 detik: logo pindah kiri & kecil, ArsipKu muncul, Airnav Indonesia muncul
   setTimeout(() => {
     logoStyle.value = {
       top: "1.25rem",
@@ -120,68 +122,92 @@ onMounted(() => {
     };
     textClass.value = "opacity-100";
     airnavClass.value = "opacity-100";
-  }, 4000);
+    OnboardingClass.value = "opacity-100";
+  }, 3000);
 
-  // 3 detik kemudian muncul pesawat dari bawah
+  // 5 detik kemudian muncul pesawat dari bawah
   setTimeout(() => {
     showPlane.value = true;
     logoClass.value = "opacity-100";
     // 2 detik lagi pesawat sampai tengah, lalu percepat ke atas
     setTimeout(() => {
       planeFast.value = true;
-      // 2 detik setelah pesawat ke atas, munculkan tulisan dan button
+      // 1 detik setelah pesawat ke atas, munculkan tulisan dan button
       setTimeout(() => {
         showText.value = true;
-      }, 4000);
-    }, 2000);
-  }, 7000);
+        showOnboarding.value = true;
+      }, 2000);
+    }, 1000);
+  }, 5000);
 });
 </script>
 
 <style scoped>
 .bg-base {
-  background: #fafafaa3;
+  background: #dfeefc;
 }
 
 .bg-leftGlow {
   background: radial-gradient(
     circle,
-    rgba(0, 120, 255, 0.3) 80%,
-    rgba(0, 120, 255, 0) 30%
+    rgba(0, 120, 255, 0.3) 40%,
+    rgba(0, 120, 255, 0) 60%
   );
-  filter: blur(90px);
-  animation: moveGlow 40s linear infinite;
+  filter: blur(50px);
+  animation: moveGlow 15s linear infinite;
 }
 
 .bg-middleGlow {
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.5) 80%,
-    rgba(255, 255, 255, 0) 90%
-  );
-  filter: blur(30px);
-  border-left: 10px solid #a2bfdb;
-  border-right: 10px solid #a2bfdb;
+  background: radial-gradient(circle, #e7f2ff4d 10%, rgba(0, 120, 255, 0) 20%);
+  filter: blur(10px);
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
 }
 
 .bg-rightGlow {
   background: radial-gradient(
     circle,
-    rgba(0, 120, 255, 0.3) 80%,
+    rgba(0, 120, 255, 0.3) 40%,
     rgba(0, 120, 255, 0) 90%
   );
-  filter: blur(60px);
-  animation: moveGlow 40s linear infinite;
+  filter: blur(50px);
+  animation: moveGlow 15s linear infinite;
 }
+/* Glow bulat bergerak */
+.bg-leftGlow::before,
+.bg-middleGlow::before,
+.bg-rightGlow::before {
+  content: "";
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(
+    circle,
+    rgba(250, 250, 250, 0.8) 0%,
+    rgba(250, 250, 250, 0) 70%
+  );
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: moveGlow 5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* Animasi glow bergerak */
 @keyframes moveGlow {
   0% {
-    transform: translateX(-20%);
+    transform: translate(-30%, -80%);
+  }
+  25% {
+    transform: translate(20%, -10%);
   }
   50% {
-    transform: translateX(90%);
+    transform: translate(70%, 30%);
+  }
+  75% {
+    transform: translate(-20%, 60%);
   }
   100% {
-    transform: translateX(-90%);
+    transform: translate(-30%, -20%);
   }
 }
 
