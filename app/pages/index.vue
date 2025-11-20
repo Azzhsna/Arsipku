@@ -34,7 +34,7 @@
         class="absolute top-70 left-1/2 transform -translate-x-1/2 -translate-y-[220px] text-[170px] font-bold opacity-0 transition-all duration-1000 bg-clip-text text-transparent"
         style="background-image: linear-gradient(to right, #457fb6, #f5faff)"
       >
-        {{ $t('Arsipku') }}
+        {{$t('Arsipku')}}
       </h1>
 
       <!-- Tulisan pojok kanan -->
@@ -71,14 +71,54 @@
         v-if="showText"
         class="absolute top-93 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center opacity-0 transition-opacity duration-1000 animate-fadeIn"
       >
-        <p class="text-xl font-semibold text-[#457FB6] mb-10">
-          {{$t('Pusat Pengelolaan Dokumen Internal Anda di AirNav Indonesia')}}
+        <p class="text-xl font-medium text-[#676767] mb-5">
+          {{$t('title')}}
         </p>
-        <Ubutton
-          class="px-8 py-4 bg-[#457FB6] text-white font-bold rounded-lg hover:bg-[#35629B] transition-colors"
+        <UButton
+          class="px-15 py-3 bg-[#457FB6] text-[20px] text-white font-medium rounded-lg hover:bg-[#35629B] transition-colors"
+          :label="$t('Masuk')"
+          trailing-icon="i-heroicons-arrow-right"
+        />
+      </div>
+      <!-- Onboarding -->
+      <div
+        class="relative inline-block group top-120 left-15"
+        v-if="showOnboarding"
+        :class="OnboardingClass"
+        :style="OnboardingStyle"
+      >
+        <!-- Gambar onboarding -->
+        <img
+          src="/onboarding.png"
+          class="w-[370px] rounded-2xl transition-all duration-400 group-hover:scale-115"
+        />
+
+        <!-- Overlay gelap -->
+        <div
+          class="absolute inset-0 bg-black/30 rounded-2xl pointer-events-none transition-all duration-400 group-hover:scale-115 group-hover:bg-black/40"
+        ></div>
+
+        <!-- Ikon message di dalam gambar -->
+        <img
+          src="/message.png"
+          class="absolute top-4 left-4 w-[55px] transition-all duration-100 group-hover:scale-115"
+        />
+
+        <!-- Teks di dalam gambar -->
+        <div
+          class="absolute top-22 left-5 right-4 text-white text-base font-semibold drop-shadow-lg transition-all duration-700 group-hover:scale-110"
         >
-          {{$t('Masuk')}}
-        </Ubutton>
+          {{ $t('card-teks') }}
+        </div>
+      </div>
+      <div
+        class="relative inline-block group top-110 left-210"
+        v-if="showOnboarding"
+        :class="OnboardingClass"
+        :style="OnboardingStyle"
+      >
+        <!-- gambar icon pesawat -->
+        <img src="/plane.png" class="w-[70px]" />
       </div>
     </div>
   </div>
@@ -87,7 +127,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 
-const { locales, setLocale } = useI18n() //bahasa
+const { locales, setLocale } = useI18n()
 
 const logoClass = ref("opacity-0");
 const logoStyle = ref({
