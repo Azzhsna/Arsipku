@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import {
-  Inbox, FileText, ClipboardList, Building2, Search, Archive, Trash2, ArrowLeft, X, Reply, ChevronLeft, ChevronRight, FileCheck, Calendar, Filter, Mail, Clock, ArrowUpDown, RotateCcw, Bookmark, Star, Lock, Folder, Tag, FileSignature, Send, Building, FilePen
+  Inbox, FileText, ClipboardList, Building2, Search, Archive, Trash2, ArrowLeft, X, Reply, ChevronLeft, ChevronRight, FileCheck, Calendar, Filter, Mail, Clock, ArrowUpDown, RotateCcw, Bookmark, Star, Lock, Folder, Tag, FileSignature, Send, Building, FilePen, SquareArrowOutUpRight, Printer
 } from 'lucide-vue-next';
 
 // --- DATA & STATE ---
@@ -362,19 +362,19 @@ const filterOptions = [
                       </button>
                     </UTooltip>
 
-                    <UTooltip v-if="!selected" text="Kunci" :delay-duration="0">
+                    <UTooltip text="Kunci" :delay-duration="0">
                       <button class="p-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded text-gray-500">
                         <Lock class="w-4 h-4" />
                       </button>
                     </UTooltip>
 
-                    <UTooltip v-if="!selected" text="Catatan" :delay-duration="0">
+                    <UTooltip text="Catatan" :delay-duration="0">
                       <button class="p-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded text-gray-500">
                         <FileText class="w-4 h-4" />
                       </button>
                     </UTooltip>
 
-                    <UTooltip v-if="!selected" text="Arsip" :delay-duration="0">
+                    <UTooltip text="Arsip" :delay-duration="0">
                       <button class="p-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded text-gray-500">
                         <Folder class="w-4 h-4" />
                       </button>
@@ -398,15 +398,21 @@ const filterOptions = [
                 </button>
                 <div class="flex gap-1 text-gray-500">
                   <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
-                    <Archive class="w-4 h-4" />
+                    <Tag class="w-4 h-4 transform rotate-135" />
                   </button>
                   <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
-                    <Trash2 class="w-4 h-4" />
+                    <Star class="w-4 h-4" />
+                  </button>
+                  <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
+                    <Printer class="w-4 h-4" />
                   </button>
                 </div>
               </div>
-              <div class="flex items-center gap-3">
-                <span class="text-xs text-gray-400">Detail Surat</span>
+              <div class="flex items-center gap-1">
+                <button to="/detail" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg text-gray-500"
+                  @click="closeDetail">
+                  <SquareArrowOutUpRight class="w-5 h-5" />
+                </button>
                 <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg text-gray-500"
                   @click="closeDetail">
                   <X class="w-5 h-5" />
@@ -414,46 +420,174 @@ const filterOptions = [
               </div>
             </div>
 
-            <div class="flex-1 overflow-y-auto p-6 md:p-8">
-              <div class="flex justify-between items-start gap-4 mb-6">
-                <h1 class="text-xl font-bold text-gray-900 dark:text-white leading-snug">{{ selected.subject }}</h1>
-                <span
-                  class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-[10px] font-bold uppercase rounded border">
-                  {{ selected.category }}
-                </span>
-              </div>
+            <div class="flex-1 w-full max-w-full overflow-y-auto overflow-x-hidden bg-white dark:bg-gray-900 font-sans">
 
-              <div class="flex items-start justify-between mb-8 pb-6 border-b border-gray-100 dark:border-gray-800">
-                <div class="flex items-center gap-4">
-                  <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
-                    :class="selected.color">{{ selected.initial }}</div>
-                  <div>
-                    <div class="flex items-center gap-2">
-                      <p class="text-sm font-bold text-gray-900 dark:text-white">{{ selected.from }}</p>
-                      <span class="text-[10px] text-gray-400">&lt;{{ selected.code }}&gt;</span>
-                    </div>
-                    <p class="text-xs text-gray-500 mt-0.5">ke <span class="font-medium">Saya</span></p>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <p class="text-xs font-bold">{{ selected.date }}, {{ selected.time }}</p>
-                </div>
-              </div>
+              <div class="p-6 border-b border-gray-100 dark:border-gray-800">
+                <div class="flex justify-between items-start gap-4">
+                  <div class="w-full min-w-0">
+                    <h1
+                      class="text-lg md:text-xl font-bold text-gray-900 dark:text-white leading-snug mb-2 break-words">
+                      {{ selected.subject }}
+                    </h1>
 
-              <div class="prose prose-sm dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 leading-relaxed">
-                <p>{{ selected.body }}</p>
-                <div v-if="selected.hasAttachment" class="mt-8 pt-4 border-t border-gray-100 dark:border-gray-800">
-                  <div class="flex items-center gap-3 p-3 border rounded-lg hover:bg-gray-50 cursor-pointer max-w-sm">
-                    <div class="w-10 h-10 rounded bg-red-100 flex items-center justify-center text-red-600">
-                      <FileText class="w-5 h-5" />
-                    </div>
-                    <div>
-                      <p class="text-sm font-bold">Dokumen.pdf</p>
-                      <p class="text-xs text-gray-500">2.4 MB</p>
+                    <div class="flex flex-wrap items-center gap-2 text-xs text-gray-500">
+                      <span class="font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap">{{
+                        selected.category }}</span>
+                      <span>•</span>
+                      <span class="whitespace-nowrap">{{ selected.date }}, {{ selected.time }}</span>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <div class="p-6 space-y-8">
+
+                <div class="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-2 md:gap-4 items-start">
+                  <label class="text-xs font-bold text-gray-400 uppercase tracking-wider pt-2">Pengirim</label>
+
+                  <div
+                    class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors w-fit max-w-full">
+                    <div
+                      class="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-bold shadow-sm ring-2 ring-white dark:ring-gray-900"
+                      :class="selected.color">
+                      {{ selected.initial }}
+                    </div>
+                    <div class="min-w-0">
+                      <p class="text-sm font-bold text-gray-900 dark:text-white truncate">{{ selected.from }}</p>
+                      <p class="text-xs text-gray-500 font-mono truncate">&lt;{{ selected.code }}&gt;</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-2 md:gap-4 items-start">
+                  <label class="text-xs font-bold text-gray-400 uppercase tracking-wider pt-2">Tertuju</label>
+
+                  <div class="flex flex-wrap gap-2 w-full">
+                    <div v-for="(person, index) in [
+                      { name: 'IVAN DWI SANTOSO', role: 'Staff ICT' },
+                      { name: 'EMY FITRIANI', role: 'Staff Keuangan' },
+                      { name: 'BERRY RIZKIANTO', role: 'Supervisor GA' },
+                      { name: 'ASTRID FITRADHIANI', role: 'Staff Sekretariat' },
+                      { name: 'GITA EPSILIA KARIM', role: 'Officer Pengadaan' },
+                      { name: 'ANDITA SETIADIANA', role: 'Staff Akuntansi' },
+                      { name: 'BAYU RIZKI', role: 'Junior Programmer' },
+                      { name: 'RIFQI PRAYOGA', role: 'System Analyst' }
+                    ]" :key="index" class="relative group max-w-full">
+
+                      <div
+                        class="cursor-pointer inline-flex items-center gap-2 pl-1 pr-3 py-1 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full hover:bg-white hover:shadow-sm hover:border-gray-300 dark:hover:bg-gray-700 transition-all duration-200 max-w-full">
+                        <div
+                          class="w-6 h-6 rounded-full flex-shrink-0 bg-gray-300 dark:bg-gray-600 flex items-center justify-center text-[10px] font-bold text-white shadow-sm">
+                          {{ person.name.charAt(0) }}
+                        </div>
+
+                        <span
+                          class="text-xs font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap capitalize truncate">
+                          {{ person.name.toLowerCase() }}
+                        </span>
+                      </div>
+
+                      <div
+                        class="absolute bottom-full left-0 mb-2 w-64 invisible opacity-0 translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out z-50">
+                        <div
+                          class="bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4 overflow-hidden relative">
+                          <div class="flex items-start gap-4 mt-1">
+                            <div
+                              class="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex-shrink-0 flex items-center justify-center text-lg font-bold text-gray-500 dark:text-gray-400 ring-4 ring-gray-50 dark:ring-gray-800">
+                              {{ person.name.charAt(0) }}
+                            </div>
+                            <div class="flex-1 min-w-0">
+                              <p
+                                class="text-sm font-bold text-gray-900 dark:text-white leading-tight capitalize mb-1 break-words">
+                                {{ person.name.toLowerCase() }}
+                              </p>
+                              <div
+                                class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 border border-blue-100 dark:border-blue-800">
+                                {{ person.role }}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="absolute top-full left-0 w-full h-2 bg-transparent"></div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-2 md:gap-4 items-start">
+                  <label class="text-xs font-bold text-gray-400 uppercase tracking-wider pt-1">Disposisi</label>
+                  <div
+                    class="text-sm font-medium text-gray-900 dark:text-white bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 px-3 py-1 rounded border border-orange-100 dark:border-orange-800 w-fit max-w-full break-words">
+                    Proses Lanjut, Lainnya
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-2 md:gap-4 items-start">
+                  <label class="text-xs font-bold text-gray-400 uppercase tracking-wider pt-1">Catatan</label>
+                  <div class="prose prose-sm dark:prose-invert max-w-none w-full text-gray-800 dark:text-gray-200">
+
+                    <p class="whitespace-pre-line leading-relaxed break-words">{{ selected.body }}</p>
+
+                    <div v-if="selected.hasAttachment"
+                      class="mt-4 pt-4 border-t border-dashed border-gray-200 dark:border-gray-700">
+                      <div
+                        class="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-medium text-xs cursor-pointer hover:underline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path
+                            d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48">
+                          </path>
+                        </svg>
+                        Lihat Dokumen Lampiran
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="p-6 mt-auto border-t border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900">
+                <div class="flex flex-wrap items-center gap-3">
+                  <button
+                    class="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-all">
+                    Arsipkan
+                  </button>
+
+                  <div class="relative group">
+                    <button
+                      class="flex items-center gap-2 px-4 py-2.5 bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-medium rounded-lg shadow-md transition-all active:scale-95">
+                      Lanjut Konsep
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="transition-transform duration-200 group-hover:rotate-180">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </button>
+
+                    <div
+                      class="absolute bottom-full right-0 mb-1 w-56 invisible opacity-0 translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out z-20">
+                      <div
+                        class="bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <a href="#"
+                          class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-yellow-600 transition-colors">
+                          Nota Dinas
+                        </a>
+                        <a href="#"
+                          class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-yellow-600 transition-colors border-t border-gray-100 dark:border-gray-700">
+                          Surat Dinas Internal
+                        </a>
+                        <a href="#"
+                          class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-yellow-600 transition-colors border-t border-gray-100 dark:border-gray-700">
+                          Surat Dinas Eksternal
+                        </a>
+                      </div>
+                      <div class="h-2 w-full absolute top-full left-0 bg-transparent"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
