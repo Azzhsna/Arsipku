@@ -235,14 +235,6 @@ const menus = [
     to: "/admin/titelatur",
     icon: "i-heroicons-book-open",
   },
-  { label: "Dashboard", to: "/", icon: "i-heroicons-squares-plus" },
-  { label: "Kotak Masuk", to: "/inbox", icon: "i-heroicons-inbox" },
-  { label: "Terkirim", to: "/", icon: "i-heroicons-paper-airplane" },
-  { label: "Draft", to: "/", icon: "i-heroicons-document-text" },
-  { label: "Short URL", to: "/shorturl", icon: "i-heroicons-link" },
-  { label: "Tugas", to: "/", icon: "i-heroicons-document-plus" },
-  { label: "Template", to: "/", icon: "i-heroicons-document-duplicate" },
-  { label: "Titelatur Inggris", to: "/", icon: "i-heroicons-book-open" },
 ];
 </script>
 
