@@ -167,14 +167,18 @@ function getRowItems(row: Row<Payment>) {
 
 <template>
   <div class="flex flex-wrap justify-between mb-3">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Short URL</h1>
+    <Heading variant="heading5m">Short Url</Heading>
     <UDashboardSearchButton size="lg" class="w-[300px]"/>
   </div>
 
-  <UDrawer
-    title="Masukan URL Link Anda",
-    size="lg"
-  >
+<UDrawer
+  placement="center"
+  transition="modal"
+  :ui="{
+    content: 'max-w-[380px]'
+  }"
+>
+
   <UButton trailing-icon="i-lucide-plus" size="md" color="primary" variant="solid" class="mb-3">Tambahkan URL</UButton>
 
     <template #body>
