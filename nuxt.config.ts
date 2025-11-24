@@ -1,42 +1,42 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
+  compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
-  modules: ['@nuxt/ui', '@nuxtjs/i18n'],
+  modules: ["@nuxt/ui", "@nuxt/icon", "@nuxtjs/i18n"],
 
   i18n: {
-    defaultLocale: 'id',
-    langDir: 'locales/',
+    defaultLocale: "id",
+    langDir: "locales/",
     lazy: true,
 
     locales: [
-      { code: 'id', name: 'ID', file: 'id.json' },
-      { code: 'en', name: 'EN', file: 'en.json' }
-    ]
+      { code: "id", name: "ID", file: "id.json" },
+      { code: "en", name: "EN", file: "en.json" },
+    ],
   },
 
-  css: ['~/assets/css/main.css'],
+  css: ["~/assets/css/main.css"],
 
   ui: {
     fonts: true,
     colorMode: false,
     theme: {
       colors: [
-        'primary',
-        'secondary',
-        'warning',
-        'error',
-        'success',
-        'neutral'
+        "primary",
+        "secondary",
+        "warning",
+        "error",
+        "success",
+        "neutral",
       ],
       transitions: false,
       defaultVariants: {
-        color: 'neutral',
-        size: 'sm'
+        color: "neutral",
+        size: "sm",
       },
     },
     experimental: {
-      componentDetection: ['Modal', 'Dropdown', 'Popover']
-    }
-  }
-})
+      componentDetection: ["Modal", "Dropdown", "Popover"],
+    },
+  },
+});
