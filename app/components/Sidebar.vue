@@ -227,7 +227,7 @@ const menus = [
   { label: "Kotak Masuk", to: "/admin/inbox", icon: "i-heroicons-inbox" },
   { label: "Terkirim", to: "/", icon: "i-heroicons-paper-airplane" },
   { label: "Draft", to: "/", icon: "i-heroicons-document-text" },
-  { label: "Short URL", to: "/", icon: "i-heroicons-link" },
+  { label: "Short URL", to: "/shorturl", icon: "i-heroicons-link" },
   { label: "Tugas", to: "/", icon: "i-heroicons-document-plus" },
   { label: "Template", to: "/", icon: "i-heroicons-document-duplicate" },
   {
