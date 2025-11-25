@@ -160,7 +160,7 @@
 
       <div class="h-14 border-b border-gray-200 flex items-center justify-between px-3 shrink-0 z-30 min-w-0">
 
-        <div class="flex items-center gap-2 shrink-0">
+        <div class="flex items-center gap-1 shrink-0">
           <div class="p-1.5 rounded hover:bg-gray-100 cursor-pointer transition-colors group" @click="toggleSelectAll">
             <div
               class="w-3.5 h-3.5 border-[1.5px] border-gray-400 rounded-sm flex items-center justify-center transition-colors"
@@ -223,24 +223,23 @@
           class="flex flex-col bg-white transition-all duration-300 border-r border-gray-200 overflow-y-auto overflow-x-hidden"
           :class="selected ? 'hidden lg:flex lg:w-5/12 xl:w-[450px] shrink-0' : 'flex-1 w-full'">
 
-          <div class="px-2 py-1.5 border-b border-gray-100 bg-white shrink-0 sticky top-0 z-10 w-full overflow-hidden">
-            <div class="flex gap-1 overflow-x-auto scrollbar-hide w-full">
-              <button v-for="tab in tabs" :key="tab.value" @click="activeTab = tab.value"
-                class="px-3 py-1 rounded-full text-caption2m border transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0"
-                :class="activeTab === tab.value
-                  ? 'bg-neutral-800 text-white border-neutral-800'
-                  : 'bg-white text-neutral-600 border-gray-200 hover:bg-gray-50'">
-                <component :is="tab.icon" class="w-3 h-3" />
+          <div class="px-3 py-2.5 border-b border-gray-200 bg-white shrink-0 sticky top-0 z-10 w-full overflow-hidden">
+            <div class="flex gap-2 overflow-x-auto scrollbar-hide w-full">
+              <UButton v-for="tab in tabs" :key="tab.value" @click="activeTab = tab.value" color="primary" class="px-4 py-2 text-sm font-normal rounded-full border transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0
+                active:bg-primary-100 active:text-primary-500" :class="activeTab === tab.value
+                  ? 'bg-primary-400 text-white border-primary-400'
+                  : 'bg-white text-primary-500 border-neutral-200/50 hover:bg-primary-50'">
+                <component :is="tab.icon" class="w-4 h-4" />
                 {{ tab.label }}
-              </button>
+              </UButton>
             </div>
           </div>
 
           <div class="flex-1 pb-10 w-full">
             <div v-for="mail in filteredEmails" :key="mail.id" @click="selectMail(mail)"
-              class="group flex items-center px-4 py-3 border-b border-gray-100 hover:shadow-sm cursor-pointer transition-colors relative w-full h-[42px]"
+              class="group flex gap-2 items-center px-4 py-3 border-b border-gray-100 hover:shadow-sm cursor-pointer transition-colors relative w-full h-[48px]"
               :class="selected?.id === mail.id ? 'bg-blue-50/50' : 'hover:bg-gray-50'">
-              <div class="flex items-center gap-2 pr-2 shrink-0" @click.stop>
+              <div class="flex items-center gap-3 pr-2 shrink-0" @click.stop>
                 <div
                   class="w-3.5 h-3.5 border-[1.5px] border-gray-400 rounded-sm flex items-center justify-center transition-colors"
                   :class="selectedIds.has(mail.id) ? 'bg-primary border-primary' : 'bg-white'"
@@ -266,7 +265,7 @@
                 </div>
 
                 <div class="hidden xl:flex shrink-0">
-                  <span class="px-2 py-[1px] rounded text-[10px] font-semibold whitespace-nowrap"
+                  <span class="px-2 py-[1px] rounded-full text-[11px] font-semibold whitespace-nowrap"
                     :class="getCategoryStyle(mail.category)">
                     {{ getCategoryLabel(mail.category) }}
                   </span>
@@ -275,7 +274,7 @@
 
               <div class="pl-2 shrink-0 flex justify-end w-[65px] md:w-[75px]">
 
-                <span class="text-caption2b text-neutral-500 group-hover:hidden whitespace-nowrap">
+                <span class="text-caption2b text-neutral-500 text-[12px] group-hover:hidden whitespace-nowrap">
                   {{ mail.date }}
                 </span>
 
@@ -362,10 +361,10 @@
           </div>
 
           <div class="p-4 border-t border-gray-200 bg-white shrink-0">
-            <button
-              class="w-full bg-primary hover:bg-blue-700 text-white text-body2sb py-2.5 rounded-lg shadow-sm transition-all active:scale-[0.98]">
+            <NuxtLink :to="`/user/kotak-masuk/${selected.id}`"
+              class="flex justify-center w-full bg-primary hover:bg-blue-700 text-white text-body2sb py-2.5 rounded-lg shadow-sm transition-all active:scale-[0.98]">
               Lihat Detail Lengkap
-            </button>
+            </NuxtLink>
           </div>
         </div>
 
