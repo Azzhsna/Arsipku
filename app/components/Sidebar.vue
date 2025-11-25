@@ -127,7 +127,7 @@ const menus = [
 	{ label: "Draft", to: "/", icon: FileText },
 	{ label: "Short URL", to: "/shorturl", icon: Link },
 	{ label: "Template", to: "/", icon: Copy },
-	{ label: "Titelatur Inggris", to: "/admin/titelatur", icon: BookOpen },
+	{ label: "Titelatur Inggris", to: "/", icon: BookOpen },
 ];
 </script>
 
