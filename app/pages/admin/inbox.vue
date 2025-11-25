@@ -155,9 +155,10 @@
 </script>
 
   <template>
-    <div class="w-full h-screen flex flex-col bg-white overflow-hidden max-w-full font-sans">
+    <div
+      class="w-full h-screen flex flex-col bg-white overflow-hidden max-w-full font-sans rounded-xl shadow-lg border-gray-100">
 
-      <div class="h-14 border-b border-gray-200 flex items-center justify-between px-3 bg-blue09 shrink-0 z-30 min-w-0">
+      <div class="h-14 border-b border-gray-200 flex items-center justify-between px-3 shrink-0 z-30 min-w-0">
 
         <div class="flex items-center gap-2 shrink-0">
           <div class="p-1.5 rounded hover:bg-gray-100 cursor-pointer transition-colors group" @click="toggleSelectAll">
