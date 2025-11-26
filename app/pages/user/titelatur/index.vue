@@ -1,7 +1,6 @@
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
 import {
-  Inbox,
   Filter,
   FileCheck,
   ChevronRight,
@@ -12,23 +11,47 @@ import {
   ChevronRight as ChevronRightIcon,
 } from "lucide-vue-next";
 import Heading from "~/components/Heading.vue";
+import Pagination from "~/components/Pagination.vue";
+
+// --- CLICK OUTSIDE HANDLER ---
+const closeAll = () => {
+  openDropdown.value = null;
+};
+
+const handleClickOutside = (e) => {
+  const dropdown = document.querySelector(".custom-dropdown-content");
+  const trigger = document.querySelector(".custom-dropdown-trigger");
+
+  if (
+    dropdown &&
+    !dropdown.contains(e.target) &&
+    trigger &&
+    !trigger.contains(e.target)
+  ) {
+    closeAll();
+  }
+};
+
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", handleClickOutside);
+});
 
 // --- STATE ---
 const activeTab = ref("ALL");
 const search = ref("");
 const selected = ref(null);
 
-watch(activeTab, () => {
-  selected.value = null;
-});
-
-// --- DROPDOWN ---
+// --- DROPDOWN STATE ---
 const openDropdown = ref(null);
 const filterMode = ref("Semua ");
 const filterOptions = [" Jabatan", " Lokasi"];
 
 // --- DATA ---
-const emails = ref([
+const items = ref([
   {
     id: 1,
     from: "Kepala Divisi Teknologi Informasi",
@@ -106,24 +129,75 @@ const emails = ref([
     maintain: "Maintain",
     kontak: "Kontak SDM",
   },
+  {
+    id: 12,
+    from: "Direktur Teknik",
+    subject: "Director of Engineering",
+    maintain: "Maintain",
+    kontak: "Kontak SDM",
+  },
 ]);
 
 // --- FILTER ---
-const filteredEmails = computed(() => {
+const filteredItems = computed(() => {
   const s = search.value.toLowerCase();
-  return emails.value.filter((mail) => {
-    const tabPass =
-      activeTab.value === "ALL" || mail.category === activeTab.value;
+  return items.value.filter((it) => {
+    // Note: Pastikan properti category ada di data jika ingin filter ini aktif
+    // const tabPass = activeTab.value === "ALL" || it.category === activeTab.value;
+    const tabPass = true;
     const searchPass =
-      mail.subject.toLowerCase().includes(s) ||
-      mail.from.toLowerCase().includes(s);
+      (it.from || "").toLowerCase().includes(s) ||
+      (it.subject || "").toLowerCase().includes(s);
     return tabPass && searchPass;
   });
 });
 
+const sortedItems = computed(() => filteredItems.value);
+
+// --- PAGINATION STATE ---
+const currentPage = ref(1);
+const rowsPerPage = ref(5); // Default ke 5 agar pagination terlihat bekerja
+
+// Watcher: Reset ke halaman 1 jika search/filter/jumlah baris berubah
+watch([search, activeTab, rowsPerPage], () => {
+  currentPage.value = 1;
+  selected.value = null;
+});
+// Pastikan rowsOptions menghasilkan array objek { label: '...', value: ... }
+const rowsOptions = computed(() => {
+  const total = filteredItems.value.length;
+  // Opsi dasar
+  const base = [5, 10, 20, 50];
+
+  if (total > 0 && !base.includes(total)) {
+    base.push(total);
+  }
+
+  return base
+    .sort((a, b) => a - b)
+    .map((n) => ({
+      label: String(n), // Label harus string agar aman ditampilkan
+      value: n, // Value tetap number
+    }));
+});
+
+// Hitung data yang ditampilkan berdasarkan halaman saat ini
+const paginatedItems = computed(() => {
+  const start = (currentPage.value - 1) * rowsPerPage.value;
+  const end = start + rowsPerPage.value;
+  return sortedItems.value.slice(start, end);
+});
+
+// Hitung total halaman
+const totalPages = computed(() => {
+  if (rowsPerPage.value <= 0) return 1;
+  return Math.ceil(sortedItems.value.length / rowsPerPage.value);
+});
+
 // --- ACTIONS ---
-const selectMail = (mail) => {
-  mail.isRead = true;
+const selectItem = (it) => {
+  it.isRead = true;
+  selected.value = it;
   openDropdown.value = null;
 };
 
@@ -138,32 +212,25 @@ const setFilter = (mode) => {
 </script>
 
 <template>
-  <!-- FULL PAGE WRAPPER -->
   <div
-    class="w-full min-h-screen flex flex-col sm:flex-row sm:items-center text-gray-800 dark:text-gray-100 overflow-hidden"
+    class="w-full min-w-0 min-h-screen sm:items-center text-gray-800 dark:text-gray-100 overflow-visible"
   >
-    <div class="pb-2">
-      <Heading variant="heading6b" class="text-mobile-md sm:text-lg">
-        Titelatur Inggris
-      </Heading>
-
+    <div class="mb-5">
+      <Heading variant="heading6b" class="text-mobile-md"
+        >Titelatur Inggris</Heading
+      >
       <Heading variant="heading10m" class="text-mobile-base sm:text-sm">
         Panduan tata nama dan nomenklatur dalam Bahasa Inggris
       </Heading>
-
-      <br />
     </div>
 
-    <!-- CARD FULL HEIGHT -->
     <div
-      class="flex flex-col w-full flex-1 bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden"
+      class="flex flex-col w-full bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800"
     >
-      <!-- HEADER -->
       <div
         class="px-2 py-2 border-b border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row sm:flex-wrap md:flex-row items-start md:items-center justify-between gap-3"
       >
         <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
-          <!-- FILTER -->
           <div class="relative">
             <button
               @click.stop="toggleDropdown('filter')"
@@ -179,7 +246,6 @@ const setFilter = (mode) => {
               <ChevronRight class="w-3 h-3 rotate-90 opacity-50" />
             </button>
 
-            <!-- DROPDOWN -->
             <div
               v-if="openDropdown === 'filter'"
               class="custom-dropdown-content absolute left-0 top-full mt-1 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-100 dark:border-gray-700 py-1 z-50"
@@ -201,7 +267,6 @@ const setFilter = (mode) => {
             </div>
           </div>
 
-          <!-- SORT + REFRESH -->
           <div
             class="w-px h-6 bg-gray-200 dark:bg-gray-700 mx-1 hidden md:block"
           ></div>
@@ -218,7 +283,6 @@ const setFilter = (mode) => {
           </button>
         </div>
 
-        <!-- SEARCH -->
         <div class="flex items-center gap-3 w-full md:w-auto">
           <div class="relative flex-1 w-full md:w-56 group">
             <Search
@@ -230,7 +294,6 @@ const setFilter = (mode) => {
               class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs pl-9 pr-3 py-1.5 rounded-lg focus:ring-sky-500 focus:border-sky-500 outline-none"
             />
           </div>
-
           <div class="flex items-center gap-1 text-gray-500">
             <button
               class="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
@@ -246,57 +309,68 @@ const setFilter = (mode) => {
         </div>
       </div>
 
-      <!-- LIST (FULL HEIGHT SCROLL) -->
-      <div class="flex flex-1 overflow-y-auto bg-white dark:bg-gray-900">
-        <div class="flex flex-col scroll-smooth w-full">
-          <div
-            v-if="filteredEmails.length === 0"
-            class="p-10 flex flex-col items-center justify-center text-gray-400"
-          >
-            <Inbox class="w-10 h-10 mb-2 opacity-20" />
-            <span class="text-sm">Tidak ada surat ditemukan</span>
-          </div>
-
-          <div
-            v-for="mail in filteredEmails"
-            :key="mail.id"
-            @click="selectMail(mail)"
-            class="group relative border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors"
-          >
-            <div class="p-3 pl-4 flex gap-4 items-center min-w-0">
-              <div class="flex-1 min-w-0">
-                <Heading
-                  variant="heading10b"
-                  class="block text-gray-800 dark:text-gray-200 truncate text-mobile-md sm:text-base"
+      <div class="flex flex-col flex-1 bg-white dark:bg-gray-900">
+        <div class="flex-1 overflow-y-auto">
+          <table class="min-w-full text-left text-sm">
+            <thead
+              class="bg-primary-700 text-primary-50 dark:bg-gray-400 sticky top-0 z-10"
+            >
+              <tr>
+                <th
+                  class="px-4 py-4 font-bold dark:text-gray-300 text-mobile-base"
                 >
-                  {{ mail.from }}
-                </Heading>
-
-                <Heading
-                  variant="body2m"
-                  class="block text-gray-700 dark:text-gray-300 truncate text-mobile-base sm:text-sm"
+                  Unit
+                </th>
+                <th
+                  class="px-4 py-4 font-bold dark:text-gray-300 text-mobile-base"
                 >
-                  {{ mail.subject }}
-                </Heading>
-              </div>
-
-              <div class="shrink-0 text-right">
-                <Heading
-                  variant="body2sb"
-                  class="block text-gray-600 dark:text-gray-400 text-mobile-base sm:text-xs"
+                  Titelatur
+                </th>
+                <th
+                  class="px-4 py-4 font-bold dark:text-gray-300 text-mobile-base"
                 >
-                  {{ mail.maintain }}
-                </Heading>
-
-                <Heading
-                  variant="body3"
-                  class="block text-gray-400 text-mobile-xs sm:text-[11px]"
+                  Maintain
+                </th>
+                <th
+                  class="px-4 py-4 font-bold dark:text-gray-300 text-mobile-base"
                 >
-                  {{ mail.kontak }}
-                </Heading>
-              </div>
-            </div>
-          </div>
+                  Kontak
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="it in paginatedItems"
+                :key="it.id"
+                @click="selectItem(it)"
+                class="border-b border-gray-100 dark:border-gray-800 hover:bg-primary-50 dark:hover:bg-gray-800 cursor-pointer transition-colors"
+              >
+                <td class="px-4 py-4 text-mobile-base">{{ it.from }}</td>
+                <td class="px-4 py-4 text-mobile-base">{{ it.subject }}</td>
+                <td class="px-4 py-4 text-mobile-base">{{ it.maintain }}</td>
+                <td class="px-4 py-4 text-mobile-base">{{ it.kontak }}</td>
+              </tr>
+              <tr v-if="paginatedItems.length === 0">
+                <td colspan="4" class="px-4 py-8 text-center text-gray-500">
+                  Tidak ada data yang ditemukan.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          class="border-t border-gray-200 dark:border-gray-800 p-3 pb-5 z-100"
+        >
+          <Pagination
+            :current-page="currentPage"
+            :rows-per-page="rowsPerPage"
+            :total-items="sortedItems.length"
+            :total-pages="totalPages"
+            :rows-options="rowsOptions"
+            @update:page="currentPage = $event"
+            @update:rowsPerPage="rowsPerPage = $event"
+          />
         </div>
       </div>
     </div>
@@ -304,7 +378,6 @@ const setFilter = (mode) => {
 </template>
 
 <style scoped>
-/* Responsive Typography */
 @media (max-width: 640px) {
   .text-mobile-xs {
     font-size: 10px !important;
@@ -316,7 +389,7 @@ const setFilter = (mode) => {
     font-size: 12px !important;
   }
   .text-mobile-md {
-    font-size: 13px !important;
+    font-size: 20px !important;
   }
 }
 
