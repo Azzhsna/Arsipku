@@ -228,8 +228,11 @@ const menus = [
   { label: "Terkirim", to: "/", icon: "i-heroicons-paper-airplane" },
   { label: "Draft", to: "/", icon: "i-heroicons-document-text" },
   { label: "Short URL", to: "/shorturl", icon: "i-heroicons-link" },
-  { label: "Tugas", to: "/", icon: "i-heroicons-document-plus" },
-  { label: "Template", to: "/", icon: "i-heroicons-document-duplicate" },
+  {
+    label: "Template",
+    to: "/admin/template",
+    icon: "i-heroicons-document-duplicate",
+  },
   {
     label: "Titelatur Inggris",
     to: "/admin/titelatur",

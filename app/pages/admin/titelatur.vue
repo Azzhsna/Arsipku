@@ -11,21 +11,21 @@ import {
   ChevronLeft,
   ChevronRight as ChevronRightIcon,
 } from "lucide-vue-next";
+import Heading from "~/components/Heading.vue";
 
 // --- STATE ---
 const activeTab = ref("ALL");
 const search = ref("");
 const selected = ref(null);
 
-// Reset preview ketika tab berubah (kalau masih diperlukan)
 watch(activeTab, () => {
   selected.value = null;
 });
 
 // --- DROPDOWN ---
 const openDropdown = ref(null);
-const filterMode = ref("Semua");
-const filterOptions = ["Jabatan", "Lokasi"];
+const filterMode = ref("Semua ");
+const filterOptions = [" Jabatan", " Lokasi"];
 
 // --- DATA ---
 const emails = ref([
@@ -33,78 +33,78 @@ const emails = ref([
     id: 1,
     from: "Kepala Divisi Teknologi Informasi",
     subject: "SVP Information Technology",
-    date: "Maintain",
-    time: "Kontak SDM",
+    maintain: "Maintain",
+    kontak: "Kontak SDM",
   },
   {
     id: 2,
     from: "Direktur Keselamatan, Keamanan dan Standarisasi",
     subject: "Director of Safety, Security and Standarization",
-    date: "Maintain",
-    time: "Kontak SDM",
+    maintain: "Maintain",
+    kontak: "Kontak SDM",
   },
   {
     id: 3,
     from: "Direktur Teknik",
     subject: "Director of Engineering",
-    date: "Maintain",
-    time: "Kontak SDM",
+    maintain: "Maintain",
+    kontak: "Kontak SDM",
   },
   {
     id: 4,
     from: "Kepala Divisi Teknologi Informasi",
     subject: "SVP Information Technology",
-    date: "Maintain",
-    time: "Kontak SDM",
+    maintain: "Maintain",
+    kontak: "Kontak SDM",
   },
   {
     id: 5,
     from: "Direktur Keselamatan, Keamanan dan Standarisasi",
     subject: "Director of Safety, Security and Standarization",
-    date: "Maintain",
-    time: "Kontak SDM",
+    maintain: "Maintain",
+    kontak: "Kontak SDM",
   },
   {
     id: 6,
     from: "Direktur Teknik",
     subject: "Director of Engineering",
-    date: "Maintain",
-    time: "Kontak SDM",
+    maintain: "Maintain",
+    kontak: "Kontak SDM",
   },
   {
     id: 7,
     from: "Direktur Teknik",
     subject: "Director of Engineering",
-    date: "Maintain",
-    time: "Kontak SDM",
+    maintain: "Maintain",
+    kontak: "Kontak SDM",
   },
   {
     id: 8,
     from: "Kepala Divisi Teknologi Informasi",
     subject: "SVP Information Technology",
-    date: "Maintain",
-    time: "Kontak SDM",
+    maintain: "Maintain",
+    kontak: "Kontak SDM",
   },
   {
     id: 9,
     from: "Direktur Keselamatan, Keamanan dan Standarisasi",
     subject: "Director of Safety, Security and Standarization",
-    date: "Maintain",
-    time: "Kontak SDM",
+    maintain: "Maintain",
+    kontak: "Kontak SDM",
   },
   {
     id: 10,
     from: "Direktur Teknik",
     subject: "Director of Engineering",
-    date: "Maintain",
-    time: "Kontak SDM",
+    maintain: "Maintain",
+    kontak: "Kontak SDM",
   },
   {
     id: 11,
     from: "Direktur Teknik",
     subject: "Director of Engineering",
-    date: "Maintain",
-    time: "Kontak SDM",
+    maintain: "Maintain",
+    kontak: "Kontak SDM",
   },
 ]);
 
@@ -123,8 +123,7 @@ const filteredEmails = computed(() => {
 
 // --- ACTIONS ---
 const selectMail = (mail) => {
-  mail.isRead = true; // hanya tandai sebagai read
-  // tidak set selected → tidak membuka split
+  mail.isRead = true;
   openDropdown.value = null;
 };
 
@@ -139,18 +138,32 @@ const setFilter = (mode) => {
 </script>
 
 <template>
+  <!-- FULL PAGE WRAPPER -->
   <div
-    class="w-full h-full min-w-0 flex flex-col text-gray-800 dark:text-gray-100"
+    class="w-full min-h-screen flex flex-col sm:flex-row sm:items-center text-gray-800 dark:text-gray-100 overflow-hidden"
   >
+    <div class="pb-2">
+      <Heading variant="heading6b" class="text-mobile-md sm:text-lg">
+        Titelatur Inggris
+      </Heading>
+
+      <Heading variant="heading10m" class="text-mobile-base sm:text-sm">
+        Panduan tata nama dan nomenklatur dalam Bahasa Inggris
+      </Heading>
+
+      <br />
+    </div>
+
+    <!-- CARD FULL HEIGHT -->
     <div
-      class="flex flex-col w-full bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800"
+      class="flex flex-col w-full flex-1 bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden"
     >
-      <!-- ========== HEADER ========== -->
+      <!-- HEADER -->
       <div
-        class="px-2 py-2 border-b border-gray-200 dark:border-gray-800 flex flex-col md:flex-row items-center justify-between gap-2"
+        class="px-2 py-2 border-b border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row sm:flex-wrap md:flex-row items-start md:items-center justify-between gap-3"
       >
-        <div class="flex items-center gap-1 flex-wrap">
-          <!-- FILTER DROPDOWN -->
+        <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+          <!-- FILTER -->
           <div class="relative">
             <button
               @click.stop="toggleDropdown('filter')"
@@ -166,7 +179,7 @@ const setFilter = (mode) => {
               <ChevronRight class="w-3 h-3 rotate-90 opacity-50" />
             </button>
 
-            <!-- FILTER LIST -->
+            <!-- DROPDOWN -->
             <div
               v-if="openDropdown === 'filter'"
               class="custom-dropdown-content absolute left-0 top-full mt-1 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-100 dark:border-gray-700 py-1 z-50"
@@ -188,6 +201,7 @@ const setFilter = (mode) => {
             </div>
           </div>
 
+          <!-- SORT + REFRESH -->
           <div
             class="w-px h-6 bg-gray-200 dark:bg-gray-700 mx-1 hidden md:block"
           ></div>
@@ -206,7 +220,7 @@ const setFilter = (mode) => {
 
         <!-- SEARCH -->
         <div class="flex items-center gap-3 w-full md:w-auto">
-          <div class="relative flex-1 md:w-56 group">
+          <div class="relative flex-1 w-full md:w-56 group">
             <Search
               class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
             />
@@ -232,10 +246,9 @@ const setFilter = (mode) => {
         </div>
       </div>
 
-      <!-- ========== LIST ========== -->
-      <div class="flex flex-1 overflow-hidden bg-white dark:bg-gray-900">
+      <!-- LIST (FULL HEIGHT SCROLL) -->
+      <div class="flex flex-1 overflow-y-auto bg-white dark:bg-gray-900">
         <div class="flex flex-col scroll-smooth w-full">
-          <!-- NO DATA -->
           <div
             v-if="filteredEmails.length === 0"
             class="p-10 flex flex-col items-center justify-center text-gray-400"
@@ -244,7 +257,6 @@ const setFilter = (mode) => {
             <span class="text-sm">Tidak ada surat ditemukan</span>
           </div>
 
-          <!-- LIST ROW -->
           <div
             v-for="mail in filteredEmails"
             :key="mail.id"
@@ -252,35 +264,36 @@ const setFilter = (mode) => {
             class="group relative border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors"
           >
             <div class="p-3 pl-4 flex gap-4 items-center min-w-0">
-              <!-- NAMA + SUBJECT -->
               <div class="flex-1 min-w-0">
-                <span
-                  class="block text-[15px] font-bold text-gray-800 dark:text-gray-200 truncate"
+                <Heading
+                  variant="heading10b"
+                  class="block text-gray-800 dark:text-gray-200 truncate text-mobile-md sm:text-base"
                 >
                   {{ mail.from }}
-                </span>
+                </Heading>
 
-                <span
-                  class="block text-[12px] font-regular text-gray-800 dark:text-gray-200 truncate"
+                <Heading
+                  variant="body2m"
+                  class="block text-gray-700 dark:text-gray-300 truncate text-mobile-base sm:text-sm"
                 >
                   {{ mail.subject }}
-                </span>
-
-                <span class="block text-[10px] text-primary truncate mt-0.5">
-                  {{ mail.body }}
-                </span>
+                </Heading>
               </div>
 
-              <!-- DATE -->
               <div class="shrink-0 text-right">
-                <span
-                  class="block text-[13px] font-bold text-gray-600 dark:text-gray-400"
+                <Heading
+                  variant="body2sb"
+                  class="block text-gray-600 dark:text-gray-400 text-mobile-base sm:text-xs"
                 >
-                  {{ mail.date }}
-                </span>
-                <span class="block text-[11px] text-gray-400">{{
-                  mail.time
-                }}</span>
+                  {{ mail.maintain }}
+                </Heading>
+
+                <Heading
+                  variant="body3"
+                  class="block text-gray-400 text-mobile-xs sm:text-[11px]"
+                >
+                  {{ mail.kontak }}
+                </Heading>
               </div>
             </div>
           </div>
@@ -291,6 +304,22 @@ const setFilter = (mode) => {
 </template>
 
 <style scoped>
+/* Responsive Typography */
+@media (max-width: 640px) {
+  .text-mobile-xs {
+    font-size: 10px !important;
+  }
+  .text-mobile-sm {
+    font-size: 11px !important;
+  }
+  .text-mobile-base {
+    font-size: 12px !important;
+  }
+  .text-mobile-md {
+    font-size: 13px !important;
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -301,7 +330,6 @@ const setFilter = (mode) => {
     transform: scale(1) translateY(0);
   }
 }
-
 .custom-dropdown-content {
   animation: fadeIn 0.15s ease-out forwards;
 }
