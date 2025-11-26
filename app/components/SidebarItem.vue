@@ -1,34 +1,46 @@
+<script setup>
+const props = defineProps({
+  to: String,
+  icon: String,
+  label: String,
+  collapsed: Boolean
+})
+
+const route = useRoute()
+
+// aktif jika URL persis sama ATAU URL anak
+const active = computed(() =>
+  route.path === props.to || route.path.startsWith(props.to + '/')
+)
+</script>
+
 <template>
-  <div class="relative group">
+  <UTooltip :text="label" :prevent="collapsed" :content="{ side: 'right' }" :ui="{
+    // background: 'bg-slate-900 dark:bg-white',
+    // color: 'text-white dark:text-slate-900',
+    // padding: 'px-3 py-2',
+    // rounded: 'rounded-md',
+    // font: 'font-semibold text-xs',
+    // arrow: {
+    //   background: 'before:bg-slate-900 dark:before:bg-white',
+    //   ring: 'before:ring-0'
+    // }
+  }">
+
     <NuxtLink :to="to" :class="[
       'flex items-center transition rounded-full h-10 font-medium text-sm',
       collapsed
-        ? 'justify-center px-0'
-        : 'gap-3 px-4 justify-start',
+        ? 'justify-center px-0 w-10 mx-auto'
+        : 'gap-3 px-4 justify-start w-full',
       active
         ? 'bg-blue-100 dark:bg-white/20 text-sky-800 dark:text-white'
         : 'text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-white/10'
     ]">
-      <UIcon :name="icon" class="w-5 h-5"
+      <UIcon :name="icon" class="w-5 h-5 flex-shrink-0"
         :class="active ? 'text-sky-800 dark:text-white' : 'text-gray-600 dark:text-gray-300'" />
-      <span v-if="!collapsed" class="whitespace-nowrap">{{ label }}</span>
+
+      <span v-if="!collapsed" class="whitespace-nowrap truncate">{{ label }}</span>
     </NuxtLink>
 
-    <!-- TOOLTIP -->
-    <div v-if="collapsed" class="absolute left-full top-1/2 -translate-y-1/2 ml-2
-             bg-gray-900 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100
-             pointer-events-none transition-opacity whitespace-nowrap z-50">
-      {{ label }}
-    </div>
-  </div>
+  </UTooltip>
 </template>
-
-<script setup>
-defineProps({
-  to: String,
-  icon: String,
-  label: String,
-  collapsed: Boolean,
-  active: Boolean
-})
-</script>
