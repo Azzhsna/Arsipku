@@ -20,23 +20,23 @@
             </div>
           </div>
           <div class="flex justify-center gap-3 mt-3">
-            <UButton color="primary" @click="emit('primary')" class="px-10 py-3">
-              {{ primaryLabel }}
+            <UButton :color="primaryColor" @click="emit('primary')" class="px-10 py-3">
+              {{ primaryButton}}
             </UButton>
 
             <UButton
-              color="primary"
+              :color="secondaryColor"
               variant="outline"
               @click="emit('update:modelValue', false)"
               class="px-10 py-3"
             >
-              {{ secondaryLabel }}
+              {{ secondaryButton }}
             </UButton>
           </div>
       </div>  
     </template>
     <UButton 
-      color="primary"
+      :color="openColor"
       @click="emit('update:modelValue', true)"
       :trailing-icon="computedIcon"
     >
@@ -53,10 +53,13 @@ const props = defineProps({
   variant: String,
   descriptions: { type: Array, default: () => [] },
   inputs: { type: Array, default: () => [] },
-  primaryLabel: String,
-  secondaryLabel: String,
+  primaryButton: String,
+  secondaryButton: String,
   open: String,
-  icon: String
+  icon: String,
+  primaryColor: { type: String, default: "primary" },
+  secondaryColor: { type: String, default: "primary" },
+  openColor: { type: String, default: "primary" },
 })
 
 const computedIcon = computed(() =>

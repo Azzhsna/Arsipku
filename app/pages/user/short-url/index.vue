@@ -191,10 +191,13 @@ function getRowItems(row: Row<Payment>) {
     { placeholder: 'Url Asli' },
     { placeholder: 'Url Modifikasi' }
   ]"
-  primary-label="Simpan"
-  secondary-label="Batal"
+  primary-button="Simpan"
+  secondary-button="Batal"
   open="Tambahkan Url"
   icon="plus"
+  primary-color="primary"
+  secondary-color="secondary"
+  open-color="primary"
 />
 <!-- CARD FULL HEIGHT -->
 <div class="flex flex-col mt-3 w-full flex-1 bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
