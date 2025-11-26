@@ -13,8 +13,10 @@ const icons = [
 </script>
 
 <template>
-    <div class="min-h-screen bg-white p-4 md:p-8">
-        <UContainer class="max-w-4xl mx-auto">
+    <div
+      class="w-full flex flex-col bg-white overflow-hidden rounded-xl shadow-lg border-gray-100 py-5">
+
+        <UContainer class="">
 
             <div class="flex items-center gap-1 mb-6 text-gray-500">
                 <UButton v-for="(icon, index) in icons" :key="index" :icon="icon" variant="ghost" color="gray"
@@ -97,9 +99,9 @@ const icons = [
             </div>
 
             <div class="mt-8">
-                <UButton block size="xl" color="primary" variant="solid" icon="i-heroicons-document-text"
+                <UButton to="/user/tulis" block size="md" color="primary" variant="solid" icon="i-heroicons-document-text"
                     :ui="{ rounded: 'rounded-lg', font: 'font-semibold' }"
-                    class="bg-blue-600 hover:bg-blue-700 text-white h-12">
+                    class="bg-primary hover:bg-primary-600 text-white h-12">
                     Lanjut Konsep
                 </UButton>
             </div>
