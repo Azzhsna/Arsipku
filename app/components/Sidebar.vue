@@ -127,27 +127,6 @@ defineExpose({
 });
 
 const menus = [
-<<<<<<< HEAD
-  {
-    label: "Dashboard",
-    to: "/admin/dashboard",
-    icon: "i-heroicons-squares-plus",
-  },
-  { label: "Kotak Masuk", to: "/admin/inbox", icon: "i-heroicons-inbox" },
-  { label: "Terkirim", to: "/", icon: "i-heroicons-paper-airplane" },
-  { label: "Draft", to: "/", icon: "i-heroicons-document-text" },
-  { label: "Short URL", to: "/shorturl", icon: "i-heroicons-link" },
-  {
-    label: "Template",
-    to: "/admin/template",
-    icon: "i-heroicons-document-duplicate",
-  },
-  {
-    label: "Titelatur Inggris",
-    to: "/admin/titelatur",
-    icon: "i-heroicons-book-open",
-  },
-=======
   { label: "Dashboard", to: "/user/dashboard", icon: LayoutDashboard },
   { label: "Kotak Masuk", to: "/user/kotak-masuk", icon: Inbox },
   { label: "Terkirim", to: "/user/terkirim", icon: Send },
@@ -155,7 +134,6 @@ const menus = [
   { label: "Short URL", to: "/user/short-url", icon: Link },
   { label: "Template", to: "/user/template", icon: Copy },
   { label: "Titelatur Inggris", to: "/user/titelatur", icon: BookOpen },
->>>>>>> main
 ];
 
 </script>
