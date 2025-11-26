@@ -7,9 +7,16 @@ export default defineAppConfig({
       success: "success",
       error: "error",
       neutral: "neutral",
+      primary: "primary",
+      secondary: "secondary",
+      warning: "warning",
+      success: "success",
+      error: "error",
+      neutral: "neutral",
     },
 
     typography: {
+      base: "font-montserrat text-neutral-900",
       base: "font-montserrat text-neutral-900",
 
       variants: {
@@ -63,7 +70,17 @@ export default defineAppConfig({
         body3: "text-[12px] font-normal dark:text-white",
         caption1: "text-[12px] font-normal dark:text-white",
         caption2: "text-[11px] font-normal dark:text-white",
+        body1: "text-[16px] font-normal dark:text-white",
+        body2: "text-[14px] font-normal dark:text-white",
+        body3: "text-[12px] font-normal dark:text-white",
+        caption1: "text-[12px] font-normal dark:text-white",
+        caption2: "text-[11px] font-normal dark:text-white",
         //medium
+        body1m: "text-[16px] font-medium dark:text-white",
+        body2m: "text-[14px] font-medium dark:text-white",
+        body3m: "text-[12px] font-medium dark:text-white",
+        caption1m: "text-[12px] font-medium dark:text-white",
+        caption2m: "text-[11px] font-medium dark:text-white",
         body1m: "text-[16px] font-medium dark:text-white",
         body2m: "text-[14px] font-medium dark:text-white",
         body3m: "text-[12px] font-medium dark:text-white",
@@ -75,7 +92,22 @@ export default defineAppConfig({
         body3sb: "text-[12px] font-semibold dark:text-white",
         caption1sb: "text-[12px] font-semibold dark:text-white",
         caption2sb: "text-[11px] font-semibold dark:text-white",
+        body1sb: "text-[16px] font-semibold dark:text-white",
+        body2sb: "text-[14px] font-semibold dark:text-white",
+        body3sb: "text-[12px] font-semibold dark:text-white",
+        caption1sb: "text-[12px] font-semibold dark:text-white",
+        caption2sb: "text-[11px] font-semibold dark:text-white",
         //bold
+        body1b: "text-[16px] font-bold dark:text-white",
+        body2b: "text-[14px] font-bold dark:text-white",
+        body3b: "text-[12px] font-bold dark:text-white",
+        caption1b: "text-[12px] font-bold dark:text-white",
+        caption2b: "text-[11px] font-bold dark:text-white",
+      },
+    },
+  },
+});
+
         body1b: "text-[16px] font-bold dark:text-white",
         body2b: "text-[14px] font-bold dark:text-white",
         body3b: "text-[12px] font-bold dark:text-white",
