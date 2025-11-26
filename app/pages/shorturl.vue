@@ -3,7 +3,6 @@ import { h, resolveComponent } from 'vue'
 import type { TableColumn } from '@nuxt/ui'
 import type { Row } from '@tanstack/vue-table'
 import { useClipboard } from '@vueuse/core'
-import type { header } from '#build/ui'
 
 const UButton = resolveComponent('UButton')
 const UDropdownMenu = resolveComponent('UDropdownMenu')
@@ -11,9 +10,6 @@ const UDropdownMenu = resolveComponent('UDropdownMenu')
 const toast = useToast()
 const { copy } = useClipboard()
 
-const value = ref('')
-const domains = ['.com', '.dev', '.org']
-const domain = ref(domains[0])
 
 type Payment = {
   tanggal: string   
@@ -168,83 +164,24 @@ function getRowItems(row: Row<Payment>) {
 <template>
   <div class="flex flex-wrap justify-between mb-3">
     <Heading variant="heading5m">Short Url</Heading>
-    <UDashboardSearchButton size="lg" class="w-[300px]"/>
   </div>
 
-<UDrawer
-  placement="center"
-  transition="modal"
-  :ui="{
-    content: 'max-w-[380px]'
-  }"
->
-
-  <UButton trailing-icon="i-lucide-plus" size="md" color="primary" variant="solid" class="mb-3">Tambahkan URL</UButton>
-
-    <template #body>
-      <Placeholder class="h-48" />
-        <UFieldGroup label="ini label" class="flex flex-col items-center">
-          <div class="mb-5">
-            <p>Masukan Url Asli Anda</p>
-            <UInput
-              v-model="value"
-              placeholder="nuxt"
-              :ui="{
-                base: 'pl-14.5',
-                leading: 'pointer-events-none',
-              }"
-            >
-              <template #leading>
-                <p class="text-sm text-muted">
-                  https://
-                </p>
-              </template>
-            </UInput>
-          <USelectMenu v-model="domain" :items="domains" />
-        </div>
-        <div class="mb-5">
-            <p>Masukan Modifikasi</p>
-            <UInput
-              v-model="value"
-              placeholder="nuxt"
-              :ui="{
-                base: 'pl-14.5',
-                leading: 'pointer-events-none',
-              }"
-            >
-              <template #leading>
-                <p class="text-sm text-muted">
-                  https://
-                </p>
-              </template>
-            </UInput>
-          <USelectMenu v-model="domain" :items="domains" />
-        </div>
-        <div class="mb-5">
-            <p>Keterangan</p>
-            <UInput
-              v-model="value"
-              placeholder="nuxt"
-              :ui="{
-                base: 'pl-14.5',
-                leading: 'pointer-events-none',
-              }"
-            >
-              <template #leading>
-                <p class="text-sm text-muted">
-                  https://
-                </p>
-              </template>
-            </UInput>
-          <USelectMenu v-model="domain" :items="domains" />
-        </div>
-        </UFieldGroup>
-        <div class="justify-center flex">
-          <UButton label="Kirim" variant="solid" color="primary" size="lg" class="mr-3"/>
-          <UButton label="Edit" variant="solid" color="success" size="lg"/>
-        </div>
-    </template>
-  </UDrawer>
-  <UTable :data="data" :columns="columns" class="flex-1 border border-gray-300 rounded-2xl" />
+<Modal
+  title="Tambahkan URL"
+  variant="modal2"
+  :descriptions="[
+    'Masukan Url Asli',
+    'Masukan Url Modifikasi',
+  ]"
+  :inputs="[
+    { placeholder: 'Url Asli' },
+    { placeholder: 'Url Modifikasi' }
+  ]"
+  primary-label="Simpan"
+  secondary-label="Batal"
+  open="Tambahkan Url"
+  icon="plus"
+/>
+<UTable :data="data" :columns="columns" class="flex-1 border border-gray-300 rounded-2xl mt-3"  />
 
 </template>

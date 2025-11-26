@@ -79,6 +79,16 @@ export default defineAppConfig({
         caption1b: 'text-[12px] font-bold dark:text-white',
         caption2b: 'text-[11px] font-bold dark:text-white',
       }
+    },
+    modal: {
+      base: {
+        content: 'p-6 rounded-xl bg-white shadow-xl'
+      },
+
+      variants: {
+        modal1: { content: 'max-w-[420px]' },
+        modal2: { content: 'max-w-[420px]' },
+      }
     }
   }
 })
