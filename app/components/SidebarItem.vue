@@ -15,7 +15,7 @@ const active = computed(() =>
 </script>
 
 <template>
-  <UTooltip :text="label" :prevent="collapsed" :content="{ side: 'right' }" :ui="{
+  <UTooltip :text="label" :prevent="!collapsed" :content="{ side: 'right' }" :ui="{
     // background: 'bg-slate-900 dark:bg-white',
     // color: 'text-white dark:text-slate-900',
     // padding: 'px-3 py-2',
