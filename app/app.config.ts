@@ -107,13 +107,3 @@ export default defineAppConfig({
     },
   },
 });
-
-        body1b: "text-[16px] font-bold dark:text-white",
-        body2b: "text-[14px] font-bold dark:text-white",
-        body3b: "text-[12px] font-bold dark:text-white",
-        caption1b: "text-[12px] font-bold dark:text-white",
-        caption2b: "text-[11px] font-bold dark:text-white",
-      },
-    },
-  },
-});
