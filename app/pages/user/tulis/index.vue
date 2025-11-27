@@ -105,10 +105,45 @@
             isFullscreen.value = !isFullscreen.value
         }
 
-        // Clean up saat component destroyed
-        onBeforeUnmount(() => {
-            editor.value?.destroy()
-        })
+// Clean up saat component destroyed
+onBeforeUnmount(() => {
+    editor.value?.destroy()
+})
+
+const isTemplateModalOpen = ref(false)
+const templates = [
+  {
+    id: 1,
+    name: 'Default',
+    content: `
+      <ol>
+        <li>Lorem ipsum dolor sit amet...</li>
+        <li>Lorem ipsum dolor sit amet...</li>
+        <li>Lorem ipsum dolor sit amet...</li>
+      </ol>
+    `
+  },
+  {
+    id: 2,
+    name: 'Numbering With Child',
+    content: `
+      <ol>
+        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          <ol type="a">
+            <li>Satu</li>
+            <li>Dua</li>
+            <li>Tiga</li>
+          </ol>
+        </li>
+      </ol>
+    `
+  },
+
+]
+const applyTemplate = (template: any) => {
+    editor.value?.commands.setContent(template.content)
+    isTemplateModalOpen.value = false
+}
 </script>
 
         <template>
@@ -317,10 +352,23 @@
                         </div>
                     </div>
 
-                    <div class="relative py-4">
-                        <div class="flex gap-2 mb-5">
-                            <UButton label="Pilih Template" color="primary" icon="i-heroicons-adjustments-horizontal"
-                                class="text-white px-6 hover:bg-primary-600 font-medium" />
+            <div class="relative py-4">
+                <div class="flex gap-2 mb-5">
+                    <UModal
+                        title="Pilih Template"
+                    >
+                        <UButton label="Pilih Template" color="primary" icon="i-heroicons-adjustments-horizontal"class="text-white px-6 hover:bg-primary-600 font-medium" />
+                        <template #body>
+                            <UCard v-for="template in templates" :key="template.id" class="cursor-pointer hover:bg-gray-50" @click="applyTemplate(template)" >
+                                <div @click="isTemplateModalOpen = false">
+                                <h3 class="font-bold">{{ template.name }}</h3>
+                                <p class="text-sm text-gray-500 line-clamp-3">
+                                    {{ template.content.replace(/<[^>]*>?/gm, '') }}
+                                </p>
+                                </div>
+                            </UCard>
+                        </template>
+                    </UModal>
 
                             <UButton label="Template Saya" color="primary" icon="i-heroicons-rectangle-stack"
                                 class="text-white px-6 hover:bg-primary-600 font-medium" />
