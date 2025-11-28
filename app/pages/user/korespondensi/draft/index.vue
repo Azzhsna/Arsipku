@@ -161,14 +161,6 @@
       <div class="h-14 border-b border-gray-200 flex items-center justify-between px-3 shrink-0 z-30 min-w-0">
 
         <div class="flex items-center gap-1 shrink-0">
-  <div
-  class="w-full h-screen flex flex-col bg-transparent overflow-hidden max-w-full font-sans rounded-xl shadow-lg"
-  :class="['glass-blue']">
-
-  <!-- HEADER (h-14) -> glass header -->
-  <div class="h-14 border-b border-transparent flex items-center justify-between px-3 shrink-0 z-30 min-w-0 glass-panel">
-    <!-- bagian kiri -->
-    <div class="flex items-center gap-1 shrink-0">
           <div class="p-1.5 rounded hover:bg-gray-100 cursor-pointer transition-colors group" @click="toggleSelectAll">
             <div
               class="w-3.5 h-3.5 border-[1.5px] border-gray-400 rounded-sm flex items-center justify-center transition-colors"

@@ -3,17 +3,15 @@
 
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+                <!-- <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1> -->
+                <Heading variant="heading8b">Dashboard</Heading> 
                 <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Ringkasan aktivitas persuratan Anda hari ini.
                 </p>
             </div>
             <div class="flex gap-3">
-                <UButton icon="i-heroicons-document-plus" color="primary" variant="solid"
+                <UButton icon="i-heroicons-document-plus" size="lg" color="primary" variant="solid"
                     :ui="{ rounded: 'rounded-lg' }">
-                    Catat Surat
-                </UButton>
-                <UButton icon="i-heroicons-funnel" color="white" variant="solid" :ui="{ rounded: 'rounded-lg' }">
-                    Filter
+                    Tulis
                 </UButton>
             </div>
         </div>
@@ -31,10 +29,6 @@
                         <div class="flex items-end gap-2">
                             <h3 class="text-2xl font-bold text-gray-900 dark:text-white leading-none mt-1">{{ stat.value
                                 }}</h3>
-                            <span
-                                :class="`text-xs font-bold mb-0.5 ${stat.trendUp ? 'text-green-600' : 'text-red-500'}`">
-                                {{ stat.trend }}%
-                            </span>
                         </div>
                     </div>
                 </div>
@@ -102,7 +96,7 @@
                     </div>
                 </UCard>
 
-                <UCard :ui="cardUI">
+                <!-- <UCard :ui="cardUI">
                     <div class="flex items-start gap-4">
                         <div
                             class="p-3 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400">
@@ -114,7 +108,7 @@
                             <UProgress :value="75" color="indigo" size="sm" />
                         </div>
                     </div>
-                </UCard>
+                </UCard> -->
 
             </div>
         </div>
@@ -146,7 +140,7 @@ const stats = [
     { label: 'Surat Masuk', value: '1,240', icon: 'i-heroicons-inbox-arrow-down', trend: 12, trendUp: true, bgSolid: 'bg-blue-600' },
     { label: 'Surat Keluar', value: '843', icon: 'i-heroicons-paper-airplane', trend: 5, trendUp: true, bgSolid: 'bg-emerald-600' },
     { label: 'Perlu Disposisi', value: '18', icon: 'i-heroicons-clock', trend: 2, trendUp: false, bgSolid: 'bg-orange-500' },
-    { label: 'Arsip Digital', value: '12K', icon: 'i-heroicons-archive-box', trend: 8, trendUp: true, bgSolid: 'bg-indigo-600' },
+    { label: 'Draft', value: '2', icon: 'i-heroicons-archive-box', trend: 8, trendUp: true, bgSolid: 'bg-indigo-600' },
 ]
 
 const recentMails = [

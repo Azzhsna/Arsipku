@@ -6,9 +6,14 @@ const props = defineProps({
 </script>
 
 <template>
+
     <div class="space-y-0">
         <!-- TITLE -->
         <Heading variant="heading8m" class="text-gray-900 dark:text-white">
+
+    <div class="space-y-1">
+        <!-- TITLE -->
+        <Heading variant="heading8sb" class="text-gray-900 dark:text-white">
             {{ title }}
         </Heading>
 

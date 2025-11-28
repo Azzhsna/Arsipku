@@ -144,6 +144,7 @@ const currentMoreMenus = computed(() => route.path.startsWith("/admin") ? adminM
     </div>
 
     <div class="p-4 border-t border-gray-200 dark:border-gray-800 mt-auto">
+    <!-- <div class="p-4 border-t border-gray-200 dark:border-gray-800 mt-auto">
       <div class="relative group">
         <button
           class="flex items-center w-full gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-left overflow-hidden">
@@ -156,6 +157,7 @@ const currentMoreMenus = computed(() => route.path.startsWith("/admin") ? adminM
         </button>
       </div>
     </div>
+    </div> -->
   </aside>
 </template>
 

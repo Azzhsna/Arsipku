@@ -242,6 +242,7 @@ const nextPage = () => {
 const goToPage = (page) => {
   currentPage.value = page;
 };
+const sortedItems = computed(() => filteredItems.value);
 
 //      MODAL EDIT
 const showModal = ref(false);
@@ -360,6 +361,12 @@ const handleCancel = () => {
 
           <button
             @click="refreshData"
+          >
+            <ArrowUpDown class="w-4 h-4" />
+          </button>
+
+          <button
+
             class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg text-gray-500"
           >
             <RotateCcw class="w-4 h-4" />
@@ -389,13 +396,17 @@ const handleCancel = () => {
               <tr>
                 <th class="px-4 py-4 font-bold">Unit</th>
                 <th class="px-4 py-4 font-bold">Titelatur</th>
+
                 <th class="px-4 py-4 font-bold">Aksi</th>
+
+                <th class="px-4 py-4 font-bold"></th>
               </tr>
             </thead>
 
             <tbody>
               <tr
                 v-for="it in paginatedItems"
+                v-for="it in sortedItems"
                 :key="it.id"
                 class="border-b border-gray-100 dark:border-gray-800 hover:bg-primary-50 dark:hover:bg-gray-800"
               >
@@ -407,6 +418,7 @@ const handleCancel = () => {
                     Maintain
                   </button>
                 </td> -->
+
                 <Modal
                   v-model="showModal"
                   variant="modal2"
@@ -471,6 +483,38 @@ const handleCancel = () => {
         </div>
       </div>
     </div>
+    </div>
+
+    <!-- MODAL EDIT -->
+
+    <!-- <Modal
+      :model-value="showModal"
+      @update:model-value="showModal = $event"
+      title="Edit Titelatur"
+      :inputs="[
+        { label: 'Unit', model: selectedItem?.from || '' },
+        { label: 'Titelatur', model: selectedItem?.subject || '' },
+      ]"
+      primaryButton="Simpan"
+      secondaryButton="Batal"
+      variant="modal2"
+      @primary="handleSave"
+    /> -->
+
+    <!-- <EditModal
+      :model-value="showEditModal"
+      @update:model-value="showEditModal = $event"
+      :title="'Edit Titelatur'"
+      :descriptions="[
+        'Unit: ' + (selectedItem?.from || ''),
+        'Titelatur: ' + (selectedItem?.subject || ''),
+      ]"
+      :inputs="[{ placeholder: 'Edit titelatur...' }]"
+      primaryButton="Simpan"
+      secondaryButton="Batal"
+      variant="modal2"
+      @primary="handleSave"
+    /> -->
   </div>
 </template>
 
