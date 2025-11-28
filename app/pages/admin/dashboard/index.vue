@@ -1,20 +1,37 @@
 <template>
     <div class="space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <!-- Left Section - Title & Breadcrumb -->
+            <PageHeader title="Dashboard" :items="items" />
 
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-                <!-- <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1> -->
-                <Heading variant="heading8b">Dashboard</Heading> 
-                <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Ringkasan aktivitas persuratan Anda hari ini.
-                </p>
-            </div>
+            <!-- Right Section - Action Buttons -->
             <div class="flex gap-3">
-                <UButton icon="i-heroicons-document-plus" size="lg" color="primary" variant="solid"
-                    :ui="{ rounded: 'rounded-lg' }">
-                    Tulis
+
+                <!-- TULIS SURAT -->
+                <UButton icon="i-lucide-edit" size="lg" color="primary" variant="solid"
+                    class="hover:shadow-lg transition-all duration-200" :ui="{
+                        icon: { base: 'w-4 h-4 mr-2' },   // icon kecil + jarak kanan
+                        rounded: 'rounded-lg',
+                        padding: 'px-4 py-2.5'
+                    }">
+                    Tulis Surat
                 </UButton>
+
+                <!-- FILTER -->
+                <UButton icon="i-lucide-filter" size="lg" color="neutral" variant="outline"
+                    class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200" :ui="{
+                        icon: { base: 'w-4 h-4 mr-2' },   // icon kecil + jarak kanan
+                        rounded: 'rounded-lg',
+                        padding: 'px-4 py-2.5'
+                    }">
+                    Filter
+                </UButton>
+
+
             </div>
+
         </div>
+
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <UCard v-for="(stat, idx) in stats" :key="idx" :ui="cardUI">
@@ -29,6 +46,10 @@
                         <div class="flex items-end gap-2">
                             <h3 class="text-2xl font-bold text-gray-900 dark:text-white leading-none mt-1">{{ stat.value
                                 }}</h3>
+                            <span
+                                :class="`text-xs font-bold mb-0.5 ${stat.trendUp ? 'text-green-600' : 'text-red-500'}`">
+                                {{ stat.trend }}%
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -96,7 +117,7 @@
                     </div>
                 </UCard>
 
-                <!-- <UCard :ui="cardUI">
+                <UCard :ui="cardUI">
                     <div class="flex items-start gap-4">
                         <div
                             class="p-3 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400">
@@ -108,7 +129,7 @@
                             <UProgress :value="75" color="indigo" size="sm" />
                         </div>
                     </div>
-                </UCard> -->
+                </UCard>
 
             </div>
         </div>
@@ -116,6 +137,42 @@
 </template>
 
 <script setup lang="ts">
+
+import type { BreadcrumbItem } from '@nuxt/ui'
+
+// 1. State untuk Modal Filter
+const isFilterOpen = ref(false)
+
+// 2. Data untuk Dropdown Tulis Surat
+const tulisItems = [
+    [{
+        label: 'Naskah Dinas',
+        icon: 'i-lucide-scroll-text',
+        to: '/admin/tulis/naskah-dinas', // Sesuaikan link
+        click: () => console.log('Naskah Dinas clicked')
+    }, {
+        label: 'Konsep',
+        icon: 'i-lucide-pencil-ruler',
+        to: '/admin/tulis/konsep', // Sesuaikan link
+        click: () => console.log('Konsep clicked')
+    }]
+]
+
+const items = [
+    {
+        label: 'Home',
+        to: '/'
+    },
+    {
+        label: 'Components',
+        to: '/docs/components'
+    },
+    {
+        label: 'Breadcrumb',
+        to: '/docs/components/breadcrumb'
+    }
+] satisfies BreadcrumbItem[]
+
 // --- CONFIGURATION ---
 // 1. Mendefinisikan Style Card Satu Kali agar KONSISTEN di semua tempat
 // ring-1 ring-gray-200/50 memberikan outline super tipis agar rapi tapi tidak kasar (tegas)
@@ -140,7 +197,7 @@ const stats = [
     { label: 'Surat Masuk', value: '1,240', icon: 'i-heroicons-inbox-arrow-down', trend: 12, trendUp: true, bgSolid: 'bg-blue-600' },
     { label: 'Surat Keluar', value: '843', icon: 'i-heroicons-paper-airplane', trend: 5, trendUp: true, bgSolid: 'bg-emerald-600' },
     { label: 'Perlu Disposisi', value: '18', icon: 'i-heroicons-clock', trend: 2, trendUp: false, bgSolid: 'bg-orange-500' },
-    { label: 'Draft', value: '2', icon: 'i-heroicons-archive-box', trend: 8, trendUp: true, bgSolid: 'bg-indigo-600' },
+    { label: 'Arsip Digital', value: '12K', icon: 'i-heroicons-archive-box', trend: 8, trendUp: true, bgSolid: 'bg-indigo-600' },
 ]
 
 const recentMails = [
