@@ -22,15 +22,25 @@ const selected = ref(null);
 // --- DATA DUMMY  ---
 const emails = ref([
   { id: 1, from: "PER - PERATURAN DIREKSI", maintain: "Download" },
-  { id: 2, from: "PER - PERATURAN DIREKSI", maintain: "Download" },
-  { id: 3, from: "PER - PERATURAN DIREKSI", maintain: "Download" },
-  { id: 4, from: "PER - PERATURAN DIREKSI", maintain: "Download" },
-  { id: 5, from: "PER - PERATURAN DIREKSI", maintain: "Download" },
+  { id: 2, from: "KEP - KEPUTUSAN DIREKSI", maintain: "Download" },
+  { id: 3, from: "INS - INSTRUKSI", maintain: "Download" },
+  { id: 4, from: "SPR - SURAT PERINTAH", maintain: "Download" },
+  { id: 5, from: "SOP - STANDAR OPERASIONAL PROSEDUR", maintain: "Download" },
   { id: 6, from: "PER - PERATURAN DIREKSI", maintain: "Download" },
-  { id: 7, from: "PER - PERATURAN DIREKSI", maintain: "Download" },
-  { id: 8, from: "PER - PERATURAN DIREKSI", maintain: "Download" },
-  { id: 9, from: "PER - PERATURAN DIREKSI", maintain: "Download" },
-  { id: 10, from: "PER - PERATURAN DIREKSI", maintain: "Download" },
+  { id: 7, from: "KEP - KEPUTUSAN DIREKSI", maintain: "Download" },
+  { id: 8, from: "INS - INSTRUKSI", maintain: "Download" },
+  { id: 9, from: "SPR - SURAT PERINTAH", maintain: "Download" },
+  { id: 10, from: "SOP - STANDAR OPERASIONAL PROSEDUR", maintain: "Download" },
+  { id: 11, from: "PER - PERATURAN DIREKSI", maintain: "Download" },
+  { id: 12, from: "KEP - KEPUTUSAN DIREKSI", maintain: "Download" },
+  { id: 13, from: "INS - INSTRUKSI", maintain: "Download" },
+  { id: 14, from: "SPR - SURAT PERINTAH", maintain: "Download" },
+  { id: 15, from: "SOP - STANDAR OPERASIONAL PROSEDUR", maintain: "Download" },
+  { id: 16, from: "PER - PERATURAN DIREKSI", maintain: "Download" },
+  { id: 17, from: "KEP - KEPUTUSAN DIREKSI", maintain: "Download" },
+  { id: 18, from: "INS - INSTRUKSI", maintain: "Download" },
+  { id: 19, from: "SPR - SURAT PERINTAH", maintain: "Download" },
+  { id: 20, from: "SOP - STANDAR OPERASIONAL PROSEDUR", maintain: "Download" },
 ]);
 
 // --- FILTER ---
@@ -41,8 +51,8 @@ const filteredEmails = computed(() => {
 
 // --- PAGINATION ---
 const currentPage = ref(1);
-const rowsPerPage = ref(5); // default 5
-const rowsChoices = [5, 10, 15, 25, 50];
+const rowsPerPage = ref(10);
+const rowsChoices = [5, 10, 15, 25, 50, 100];
 
 const totalItems = computed(() => filteredEmails.value.length);
 
