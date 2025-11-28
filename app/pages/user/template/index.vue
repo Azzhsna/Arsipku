@@ -4,7 +4,6 @@ import {
   Inbox,
   Filter,
   FileCheck,
-  ChevronRight,
   Search,
   ArrowUpDown,
   RotateCcw,
@@ -12,6 +11,7 @@ import {
   ChevronRight as ChevronRightIcon,
   Download,
 } from "lucide-vue-next";
+
 import Heading from "~/components/Heading.vue";
 
 // --- STATE ---
@@ -53,8 +53,6 @@ const filteredEmails = computed(() => {
 const currentPage = ref(1);
 const rowsPerPage = ref(10);
 const rowsChoices = [5, 10, 15, 25, 50, 100];
-const rowsPerPage = ref(5); // default 5
-const rowsChoices = [5, 10, 15, 25, 50];
 
 const totalItems = computed(() => filteredEmails.value.length);
 
