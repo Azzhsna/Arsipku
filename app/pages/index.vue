@@ -48,25 +48,6 @@
         class="absolute top-5 right-10 flex flex-col items-end opacity-0 transition-opacity duration-1000"
       >
         <h2 class="text-xl font-bold text-[#457FB6]">Airnav Indonesia</h2>
-        <!-- Translate -->
-        <div
-          class="flex items-center p-1 mt-1 bg-gray-100 dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700"
-        >
-          <button
-            v-for="locale in locales"
-            :key="locale.code"
-            @click="setLocale(locale.code)"
-            class="px-3 py-2 text-xs font-bold rounded-full transition-all duration-200 ease-out"
-            :class="[
-              currentLocale === locale.code
-                ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm scale-105'
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200',
-            ]"
-          >
-            {{ locale.name }}
-          </button>
-        </div>
-
         <div class="flex gap-2 mt-2">
           <button
             v-for="locale in locales"
@@ -161,13 +142,7 @@ import { ArrowRight } from "lucide-vue-next";
 
 definePageMeta({ layout: false });
 
-const collapsed = ref(false);
-const { setLocale } = useI18n();
-const currentLocale = ref("id");
-const locales = [
-  { code: "id", name: "ID" },
-  { code: "en", name: "EN" },
-];
+const { locales, setLocale } = useI18n();
 
 // UI states
 const loaded = ref(false);
